@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "IstioGrpc";
+
+package joke;
+
+// The joker service definition.
+service Joker {
+  // Sends a new joke
+  rpc NewJoke (JokeRequest) returns (JokeReply);
+}
+
+// The request message empty.
+message JokeRequest {
+  
+}
+
+// The response message containing the joke.
+message JokeReply {
+  string setup = 1;
+  string punchline = 2;
+}
