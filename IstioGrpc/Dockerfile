@@ -3,11 +3,10 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["IstioGrpc/IstioGrpc.csproj", "IstioGrpc/"]
-RUN dotnet nuget locals all --clear
-RUN dotnet restore "IstioGrpc/IstioGrpc.csproj" -r linux-arm64
+RUN dotnet restore "IstioGrpc/IstioGrpc.csproj"
 COPY . .
 WORKDIR "/src/IstioGrpc"
 RUN dotnet build "IstioGrpc.csproj" -c Release -o /app/build

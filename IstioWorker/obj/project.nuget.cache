@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "P5jag0c+VfPhL4N3m111w/Mls0z0YB7M3XfBOoeoYC3EGfy9I3/1GT1wYH4W0WZUSCidS+s1O5YmI41Nc5RN5Q==",
+  "dgSpecHash": "6n6rWPWt8zRynSTFSSZa1JUNErezEKgodeR5u7D+nkjdwhueHOP/PHJSc+6tJkwp2Si0J3V44kPuWHx0Q4jjCg==",
   "success": true,
   "projectFilePath": "/home/ecc/Project/IstioLab/IstioWorker/IstioWorker.csproj",
   "expectedPackageFiles": [
+    "/home/ecc/.nuget/packages/google.protobuf/3.24.0-rc3/google.protobuf.3.24.0-rc3.nupkg.sha512",
+    "/home/ecc/.nuget/packages/grpc.core.api/2.55.0/grpc.core.api.2.55.0.nupkg.sha512",
+    "/home/ecc/.nuget/packages/grpc.net.client/2.55.0/grpc.net.client.2.55.0.nupkg.sha512",
+    "/home/ecc/.nuget/packages/grpc.net.common/2.55.0/grpc.net.common.2.55.0.nupkg.sha512",
+    "/home/ecc/.nuget/packages/grpc.tools/2.57.0-pre1/grpc.tools.2.57.0-pre1.nupkg.sha512",
     "/home/ecc/.nuget/packages/microsoft.extensions.configuration/7.0.0/microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "/home/ecc/.nuget/packages/microsoft.extensions.configuration.abstractions/7.0.0/microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "/home/ecc/.nuget/packages/microsoft.extensions.configuration.binder/7.0.3/microsoft.extensions.configuration.binder.7.0.3.nupkg.sha512",
@@ -31,6 +36,7 @@
     "/home/ecc/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.diagnostics.diagnosticsource/7.0.1/system.diagnostics.diagnosticsource.7.0.1.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.diagnostics.eventlog/7.0.0/system.diagnostics.eventlog.7.0.0.nupkg.sha512",
+    "/home/ecc/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512"
   ],

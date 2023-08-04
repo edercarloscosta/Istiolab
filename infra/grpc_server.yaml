@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server
+spec:  
+  selector:
+    matchLabels:
+      app: grpc-server
+  template:
+    metadata:
+      labels:
+        app: grpc-server
+    spec:
+      containers:
+        - name: grpc-server
+          ports:
+            - containerPort: 80
+          image: eccbot/istiogrpc:latest
+          imagePullPolicy: Always
+          resources: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-server-service
+  labels:
+    app: grpc-server-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: grpc-server

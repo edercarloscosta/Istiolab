@@ -1,13 +1,10 @@
-﻿FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine AS base
+﻿FROM mcr.microsoft.com/dotnet/runtime:7.0 AS base
 WORKDIR /app
 
-RUN apk add --no-cache icu-libs
-
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["IstioWorker/IstioWorker.csproj", "IstioWorker/"]
-RUN dotnet nuget locals all --clear
-RUN dotnet restore "IstioWorker/IstioWorker.csproj"
+RUN dotnet restore "IstioWorker/IstioWorker.csproj" -r linux-arm64
 COPY . .
 WORKDIR "/src/IstioWorker"
 RUN dotnet build "IstioWorker.csproj" -c Release -o /app/build

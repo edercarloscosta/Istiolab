@@ -44,3 +44,7 @@
 /home/ecc/Project/IstioLab/IstioWorker/obj/Debug/net7.0/IstioWorker.pdb
 /home/ecc/Project/IstioLab/IstioWorker/obj/Debug/net7.0/IstioWorker.genruntimeconfig.cache
 /home/ecc/Project/IstioLab/IstioWorker/obj/Debug/net7.0/ref/IstioWorker.dll
+/home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Google.Protobuf.dll
+/home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Grpc.Core.Api.dll
+/home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Grpc.Net.Client.dll
+/home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Grpc.Net.Common.dll
