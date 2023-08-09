@@ -48,3 +48,5 @@
 /home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Grpc.Core.Api.dll
 /home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Grpc.Net.Client.dll
 /home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Grpc.Net.Common.dll
+/home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Polly.dll
+/home/ecc/Project/IstioLab/IstioWorker/bin/Debug/net7.0/Polly.Core.dll

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6n6rWPWt8zRynSTFSSZa1JUNErezEKgodeR5u7D+nkjdwhueHOP/PHJSc+6tJkwp2Si0J3V44kPuWHx0Q4jjCg==",
+  "dgSpecHash": "UyoW30sGfhgRjErVEkuSPp+IQnP5GGhsYRFmg6y5CzWffYYMqrU6j3GNy82LQbZD9gi9S8BI8qylM3gbpdZ5gQ==",
   "success": true,
   "projectFilePath": "/home/ecc/Project/IstioLab/IstioWorker/IstioWorker.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,8 @@
     "/home/ecc/.nuget/packages/microsoft.extensions.options/7.0.1/microsoft.extensions.options.7.0.1.nupkg.sha512",
     "/home/ecc/.nuget/packages/microsoft.extensions.options.configurationextensions/7.0.0/microsoft.extensions.options.configurationextensions.7.0.0.nupkg.sha512",
     "/home/ecc/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "/home/ecc/.nuget/packages/polly/8.0.0-alpha.8/polly.8.0.0-alpha.8.nupkg.sha512",
+    "/home/ecc/.nuget/packages/polly.core/8.0.0-alpha.8/polly.core.8.0.0-alpha.8.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.diagnostics.diagnosticsource/7.0.1/system.diagnostics.diagnosticsource.7.0.1.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.diagnostics.eventlog/7.0.0/system.diagnostics.eventlog.7.0.0.nupkg.sha512",
     "/home/ecc/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",

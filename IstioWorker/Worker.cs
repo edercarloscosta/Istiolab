@@ -1,5 +1,6 @@
 using Grpc.Net.Client;
 using IstioGrpc;
+using Polly;
 
 namespace IstioWorker;
 
@@ -11,8 +12,13 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var channel = GrpcChannel.ForAddress("http://grpc-server-service:80");
-        var client = new Joker.JokerClient(channel);
+        var retryPolicy = Policy.Handle<HttpRequestException>()
+            .Or<Grpc.Core.RpcException>()
+            .WaitAndRetry(5, retryAttempt 
+                => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            
+        using var channel = GrpcChannel.ForAddress("http://istiogrpc:80");
+        var client = retryPolicy.Execute(() => new Joker.JokerClient(channel));
         
         while (!stoppingToken.IsCancellationRequested)
         {
