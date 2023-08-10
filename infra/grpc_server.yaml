@@ -1,32 +1,94 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grpc-server
+  name: istiogrpc-v1
+  labels:
+    app: istiogrpc
+    version: v1
 spec:  
   selector:
     matchLabels:
-      app: grpc-server
+      app: istiogrpc
+      version: v1
+  replicas: 2    
   template:
     metadata:
       labels:
-        app: grpc-server
+        app: istiogrpc
+        version: v1
     spec:
       containers:
-        - name: grpc-server
+        - name: svc
           ports:
             - containerPort: 80
           image: eccbot/istiogrpc:latest
           imagePullPolicy: Always
-          resources: {}
 
 ---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istiogrpc-v2
+  labels:
+    app: istiogrpc
+    version: v2
+spec:
+  selector:
+    matchLabels:
+      app: istiogrpc
+      version: v2
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: istiogrpc
+        version: v2
+    spec:
+      containers:
+        - name: svc
+          ports:
+            - containerPort: 80
+          image: eccbot/istiogrpc:latest
+          imagePullPolicy: Always
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istiogrpc-v3
+  labels:
+    app: istiogrpc
+    version: v3
+spec:
+  selector:
+    matchLabels:
+      app: istiogrpc
+      version: v3
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: istiogrpc
+        version: v3
+    spec:
+      containers:
+        - name: svc
+          ports:
+            - containerPort: 80
+          image: eccbot/istiogrpc:latest
+          imagePullPolicy: Always
+
+---          
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: grpc-server-service
+  name: istiogrpc
   labels:
-    app: grpc-server-service
+    app: istiogrpc
 spec:
   type: NodePort
   ports:
@@ -34,4 +96,4 @@ spec:
       port: 80
       targetPort: 80
   selector:
-    app: grpc-server
+    app: istiogrpc

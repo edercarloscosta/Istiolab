@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grpc-server-vs
+spec:
+  hosts:
+    - grpc-server-service
+  http:
+    - route:
+        - destination:
+            host: grpc-server-service  
+            subset: v1
+            port:
+              number: 80
+          weight: 30
+        - destination:
+            host: grpc-server-service
+            subset: v2  
+            port:
+              number: 80
+          weight: 30          
+        - destination:
+            host: grpc-server-service
+            subset: v3
+            port:
+              number: 80
+          weight: 40  

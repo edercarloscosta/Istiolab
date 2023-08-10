@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using Grpc.Net.Client;
 using IstioGrpc;
+using Polly;
 
 namespace IstioWorker;
 
@@ -11,19 +13,38 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var channel = GrpcChannel.ForAddress("http://grpc-server-service:80");
-        var client = new Joker.JokerClient(channel);
+        var retryPolicy = Policy.Handle<HttpRequestException>()
+            .Or<Grpc.Core.RpcException>()
+            .WaitAndRetry(5, retryAttempt 
+                => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        
+        var stopwatch = new Stopwatch();
+        
+        using var channel = GrpcChannel.ForAddress("http://istiogrpc:80");
+        var client = retryPolicy.Execute(() => new Joker.JokerClient(channel));
         
         while (!stoppingToken.IsCancellationRequested)
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
         
+            // Start the stopwatch before making the gRPC call
+            stopwatch.Start();
+            
             var reply = await client.NewJokeAsync(new JokeRequest());
-
+            
+            // Stop the stopwatch after the gRPC call
+            stopwatch.Stop();
+            
             Console.WriteLine($"Setup: {reply.Setup}");
             await Task.Delay(3000, stoppingToken);
-            Console.WriteLine($"Punchline: {reply.Punchline}\n");
+            Console.WriteLine($"Punchline: {reply.Punchline}");
+            
+            // Print the elapsed time for the gRPC call
+            Console.WriteLine($"Time taken for gRPC call: {stopwatch.Elapsed}\n");
 
+            // Reset the stopwatch for the next iteration
+            stopwatch.Reset();
+            
             await Task.Delay(20000, stoppingToken);
         }
     }

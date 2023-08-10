@@ -1,18 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grpc-client
+  name: istioworker
 spec:  
+  replicas: 3
   selector:
     matchLabels:
-      app: grpc-client
+      app: istioworker
+      version: v1
   template:
     metadata:
       labels:
-        app: grpc-client
+        app: istioworker
+        version: v1
     spec:
       containers:
-        - name: grpc-client
+        - name: wkr
           image: eccbot/istioworker:latest
           imagePullPolicy: Always
-          resources: {}
+          ports:
+            - containerPort: 80
+              
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: istioworker
+  labels:
+    app: istioworker
+spec:
+  selector:
+    app: istioworker
+  ports:
+    - port: 80
+      name: http                
