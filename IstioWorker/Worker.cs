@@ -1,6 +1,12 @@
+using System;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Grpc.Net.Client;
 using IstioGrpc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Polly;
 
 namespace IstioWorker;
