@@ -26,11 +26,11 @@ app.UseGrpcMetrics();
 // Capture metrics about received HTTP requests.
 app.UseHttpMetrics();
 
-// Configure the HTTP request pipeline.
-app.MapGrpcService<JokerService>();
-
 app.UseEndpoints(endpoints =>
 {
+    // Configure the HTTP request pipeline.
+    app.MapGrpcService<JokerService>();
+    
     // Metrics published in this sample:
     // * built-in process metrics giving basic information about the .NET runtime (enabled by default)
     // * metrics from .NET Event Counters (enabled by default, updated every 10 seconds)

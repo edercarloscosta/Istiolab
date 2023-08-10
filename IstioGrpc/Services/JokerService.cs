@@ -2,6 +2,7 @@ using System.Text.Json;
 using Grpc.Core;
 using IstioGrpc.Model;
 using Polly;
+using Prometheus;
 
 namespace IstioGrpc.Services;
 
@@ -9,7 +10,15 @@ public class JokerService : Joker.JokerBase
 {
     private readonly ILogger<JokerService> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
-
+    
+    #region Metrics Prometheus
+    private readonly Counter _recordsProcessed = Metrics.CreateCounter(
+        "server_success_total", "Total number of records processed.");
+    
+    private readonly Counter _errorCounter = Metrics.CreateCounter(
+        "server_errors_total", "Total errors in gRPC server");
+    #endregion
+    
     public JokerService(
         ILogger<JokerService> logger, 
         IHttpClientFactory httpClientFactory)
@@ -23,6 +32,8 @@ public class JokerService : Joker.JokerBase
                 .Or<RpcException>()
                 .WaitAndRetry(5, retryAttempt 
                     => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            
+            _recordsProcessed.Inc();
             
             var httpClient = _httpClientFactory.CreateClient("joker");
             var response = await retryPolicy.Execute(() 
@@ -57,6 +68,7 @@ public class JokerService : Joker.JokerBase
         catch (Exception err)
         {
             _logger.LogError(err, "Error on NewJoke {e}", err);
+            _errorCounter.Inc();
             throw;
         }
         
