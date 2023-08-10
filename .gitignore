@@ -75,6 +75,8 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.obj
+*.bin
+*.dll
 *.iobj
 *.pch
 *.pdb
@@ -396,5 +398,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
+*.idea
 .env
+
+
