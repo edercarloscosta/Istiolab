@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Grpc.Core;
 using IstioGrpc.Model;
+using Polly;
 
 namespace IstioGrpc.Services;
 
@@ -8,7 +9,7 @@ public class JokerService : Joker.JokerBase
 {
     private readonly ILogger<JokerService> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
-    
+
     public JokerService(
         ILogger<JokerService> logger, 
         IHttpClientFactory httpClientFactory)
@@ -18,8 +19,14 @@ public class JokerService : Joker.JokerBase
     {
         try
         {
+            var retryPolicy = Policy.Handle<HttpRequestException>()
+                .Or<RpcException>()
+                .WaitAndRetry(5, retryAttempt 
+                    => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            
             var httpClient = _httpClientFactory.CreateClient("joker");
-            var response = await httpClient.GetAsync("random_joke");
+            var response = await retryPolicy.Execute(() 
+                => httpClient.GetAsync("random_joke"));
             
             if (!response.IsSuccessStatusCode)
             {

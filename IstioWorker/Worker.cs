@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Grpc.Net.Client;
 using IstioGrpc;
 using Polly;
+using Prometheus;
 
 namespace IstioWorker;
 
@@ -13,6 +14,10 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        var recordsProcessed = Metrics.CreateCounter(
+            "sample_records_processed_total",
+            "Total number of records processed.");
+        
         var retryPolicy = Policy.Handle<HttpRequestException>()
             .Or<Grpc.Core.RpcException>()
             .WaitAndRetry(5, retryAttempt 
@@ -29,6 +34,8 @@ public class Worker : BackgroundService
         
             // Start the stopwatch before making the gRPC call
             stopwatch.Start();
+            
+            recordsProcessed.Inc();
             
             var reply = await client.NewJokeAsync(new JokeRequest());
             
