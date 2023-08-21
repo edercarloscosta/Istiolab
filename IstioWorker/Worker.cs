@@ -25,13 +25,16 @@ public class Worker : BackgroundService
         {
             var retryPolicy = Policy.Handle<HttpRequestException>()
                 .Or<Grpc.Core.RpcException>()
-                .WaitAndRetry(5, retryAttempt 
-                    => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                    (exception, timeSpan, retryCount, context) =>
+                    {
+                        _logger.LogWarning($"Retrying due to {exception.GetType().Name}. Retry attempt {retryCount}. Delay: {timeSpan}");
+                    });
         
             var stopwatch = new Stopwatch();
         
             using var channel = GrpcChannel.ForAddress("http://istiogrpc:80");
-            var client = retryPolicy.Execute(() => new Joker.JokerClient(channel));
+            var client =  new Joker.JokerClient(channel);
         
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -41,9 +44,10 @@ public class Worker : BackgroundService
                 stopwatch.Start();
             
                 _recordsProcessed.Inc();
-            
-                var reply = await client.NewJokeAsync(new JokeRequest());
-            
+
+                var reply = await retryPolicy.ExecuteAsync(async () => 
+                        await client.NewJokeAsync(new JokeRequest()));
+                
                 // Stop the stopwatch after the gRPC call
                 stopwatch.Stop();
             

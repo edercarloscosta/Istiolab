@@ -1,4 +1,6 @@
 using IstioGrpc.Services;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
 using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,12 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Additional configuration is required to successfully run gRPC on macOS.
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
-// Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddHttpClient("joker", httpClient =>
-{
-    httpClient.BaseAddress = new Uri("https://official-joke-api.appspot.com/");
-});
+builder.Services.AddHttpClient("joker", client =>
+    {
+        client.BaseAddress = new Uri("https://official-joke-api.appspot.com/");
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+    })
+    .AddTransientHttpErrorPolicy(policyBuilder
+        => policyBuilder.WaitAndRetryAsync(
+            Backoff.DecorrelatedJitterBackoffV2(
+                TimeSpan.FromSeconds(1), 
+                5)));
 
 var app = builder.Build();
 

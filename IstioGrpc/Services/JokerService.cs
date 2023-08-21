@@ -28,16 +28,10 @@ public class JokerService : Joker.JokerBase
     {
         try
         {
-            var retryPolicy = Policy.Handle<HttpRequestException>()
-                .Or<RpcException>()
-                .WaitAndRetry(5, retryAttempt 
-                    => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-            
             _recordsProcessed.Inc();
             
             var httpClient = _httpClientFactory.CreateClient("joker");
-            var response = await retryPolicy.Execute(() 
-                => httpClient.GetAsync("random_joke"));
+            var response = await httpClient.GetAsync("random_joke");
             
             if (!response.IsSuccessStatusCode)
             {
