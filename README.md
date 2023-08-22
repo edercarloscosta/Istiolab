@@ -13,8 +13,8 @@ A gRPC server that is going to the web to get random jokes.
 A Client to the gRPC server consumption that triggers a call every 20 sec.
 
 ## Tech Stack
-- NET7 WebApi gRPC template 
-- NET7 Worker template
+- NET7 WebApi gRPC template as gRPC Server
+- NET7 Worker template as gRPC Client
 
 ## The Environment
 - Docker
@@ -96,3 +96,38 @@ pod/istioworker-7bc7c5d495-7pttv    2/2     Running   2 (18s ago)   24s
 pod/istioworker-7bc7c5d495-rgl5w    2/2     Running   2 (17s ago)   24s
 
 ```
+
+### Using Istio infra:
+
+As you can see on the Infra folder in the project root, there are many other .yaml files to be deployed on k8s, such as:
+
+- [Grafana](https://grafana.com/)
+- [Jaeger](https://www.jaegertracing.io/)
+- [Prometheus](https://prometheus.io/)
+- [Kiali](https://kiali.io/)
+
+You may apply each one individually
+
+> kubectl apply -f infra/<file_name>.yml
+
+Or you may apply all those files at the same time, don't worry if it includes the already implemented files
+
+> kubectl apply -f infra
+
+### Opening the Infrastructure Services based on Istio:
+
+Kiali Dashboard
+
+> istioctl dashboard kiali
+
+Prometheus Dashboard
+
+> istioctl dashboard prometheus
+
+Grafana Dashboard
+
+> istioctl dashboard grafana
+
+Jaeger Dashboard 
+> istioctl dashboard jaeger
+
