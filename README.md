@@ -6,7 +6,7 @@ This project is a proof of concept focusing on Kubernetes deployment with Istio 
 
 ***First one:*** 
 
-A gRPC server that is going to the web to get random jokes.
+A gRPC server that is going to the web to get [random jokes](https://official-joke-api.appspot.com/).
 
 ***Second one:*** 
 
